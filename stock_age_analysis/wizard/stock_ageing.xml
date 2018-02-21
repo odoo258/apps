@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_age_analysis_wizard" model="ir.ui.view">
+        <field name="name">stock.age.analysis.report.wizard.form</field>
+        <field name="model">stock.ageing.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Stock Age Analysis">
+                <sheet>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        <field name="warehouse_id"/>
+                        <field name="location_id"/>
+                        <field name="product_category_id"/>
+                        <field name="Product_id"/>
+                        <field name="days"/>
+                        <field name="from_date"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="print_report" string="Print" type="object"
+                    class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_age_analysis" model="ir.actions.act_window">
+        <field name="name">Stock Age Analysis</field>
+        <field name="res_model">stock.ageing.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="stock_age_analysis_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_action_stock_age_analysis" action="action_stock_age_analysis" parent="account.menu_finance_reports" name="Stock Age Analysis"/>
+</odoo>

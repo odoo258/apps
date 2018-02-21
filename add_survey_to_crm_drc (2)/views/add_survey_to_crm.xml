@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+            <record id="crm_case_form_view_job_inherit" model="ir.ui.view">
+                <field name="name">crm lead form inherit</field>
+                <field name="model">crm.lead</field>
+                <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+                <field name="arch" type="xml">
+                    <header>
+                        <button name="action_start_survey" context="{'default_active_id': active_id}" string="Go to survey" type='object'/>
+                    </header>
+                    <xpath expr = "//page[@name='lead']" position="after">
+                        <page name="survey" string="Survey">
+                            <field name="survey_input_ids">
+                            <tree string="Survey User inputs" decoration-muted="test_entry == True" create="false">
+                            <field name="survey_id"/>
+                            <field name="date_create"/>
+                            <field name="deadline"/>
+                            <field name="partner_id"/>
+                            <field name="email"/>
+                            <field name="type"/>
+                            <field name="state"/>
+                            <field name="test_entry" invisible="True"/>
+                            <field name="quizz_score" groups="base.group_no_one"/>
+                            </tree>
+                        </field>
+                        </page>
+                    </xpath>
+
+                    </field>
+            </record>
+
+            <record id="crm_stage_inherit" model="ir.ui.view">
+                <field name="name">crm stage form inherit</field>
+                <field name="model">crm.stage</field>
+                <field name="inherit_id" ref="crm.crm_stage_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="/form/group/group/field[@name='probability']" position="after">
+                        <field name="survey" string="Survey"/>
+                    </xpath>
+                </field>
+            </record>
+
+            <record id="survey_que_inherit" model="ir.ui.view">
+                <field name="name">survey question form inherit</field>
+                <field name="model">survey.question</field>
+                <field name="inherit_id" ref="survey.survey_question_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="/form/sheet/group/group/field[@name='type']" position="before">
+                        <field name="related_lead" string="Related to Lead field"/>
+                    </xpath>
+                </field>
+            </record>
+
+            <record id="survey_user" model="ir.ui.view">
+                <field name="name">crm lead inherit</field>
+                <field name="model">survey.user_input</field>
+                <field name="inherit_id" ref="survey.survey_user_input_form"/>
+                <field name="arch" type="xml">
+                    <group>
+                        <field name="survey_input_id"/>
+                    </group>
+                </field>
+            </record>
+        </data>
+    </odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_account_tax_report_form_view" model="ir.ui.view">
+            <field name="name">wizard.account.invoice.due.customer.list.form</field>
+            <field name="model">wizard.account_tax_report</field>
+            <field name="inherit_id" ref="account.account_common_report_view"/>
+            <field name="arch" type="xml">
+            <data>
+            <xpath expr="//form/group/field[@name='target_move']" position="after">
+                    <field name="account_tax_report_id" domain="[('parent_id','=',False)]"/>
+                    <field name="detail"/>
+                    <field name='journal_ids' invisible="1"/>
+                </xpath>
+            </data>
+            </field>
+        </record>
+        <record id="action_account_report_tax" model="ir.actions.act_window">
+            <field name="name">Tax Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.account_tax_report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_account_tax_report_form_view"/>
+            <field name="target">new</field>
+        </record>
+        <menuitem
+            id="menu_account_tax_report" string="Tax Report"
+            parent="account.menu_finance_legal_statement"  action="action_account_report_tax" sequence="15"/>
+    </data>
+</odoo>

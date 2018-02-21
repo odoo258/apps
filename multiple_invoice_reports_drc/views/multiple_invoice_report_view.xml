@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+         <record id="res_company_custom_inherit_form_view" model="ir.ui.view">
+            <field name="name">res_company_inherit.inherit_form_view</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]" position="after">
+                        <page string="Default Report Settings">
+                            <group string="Default Settings">
+                                <group>
+                                    <field name="report_logo" class="oe_avatar" widget="image"/>
+                               
+                                <field name="account_template" widget="selection"/>
+                               
+                                 <field name="template_base_color" widget="color"/>
+                                 
+                                <field name="template_text_color" widget="color"/>
+                                <field name="general_text_color" widget="color"/>
+                                <field name="company_name_color" widget="color"/>
+                                <field name="company_adddress_color" widget="color"/>
+                                <field name="is_comany_name_bold"/>
+                                </group>
+                                <group>
+                                    
+                                <field name="report_watermark_logo" class="oe_avatar" widget="image"/>
+                                <!-- <field name="report_watermark_logo" /> -->
+                <!-- <field name="pdf_watermark_expression" /> -->
+                               
+                                <field name="table_odd_parity_color" widget="color"/>
+                               
+                                 <field name="table_even_parity_color" widget="color"/>
+                                 
+                                <field name="customer_name_color" widget="color"/>
+                                 <field name="customer_address_color" widget="color"/>
+                                  <field name="display_product_description"/>
+                                   <field name="display_customer_name_bold"/>
+                        </group>  
+                               
+                            </group>
+                        </page>
+                    
+                    <page string="Custom Footer">
+                        <group >
+                                <group>
+                                    <field name="is_custom_footer"/>
+                                    <field name="report_footer"/>
+                                    <field name="paperformat_id"/>
+
+                                </group>
+                            </group>
+                        </page>
+                   
+                </xpath>         
+
+                       
+                       
+
+            </field>
+        </record>
+
+       <record model="ir.ui.view" id="view_res_partner_form_inherited">
+        <field name="name">res.partner.property.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//group[1]" position="after">
+        <group> 
+            <group>
+                <field name="account_template"/>
+            </group>
+            </group>
+                
+        </xpath> 
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_invoice_form_inherited">
+        <field name="name">account.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//group[1]" position="after">
+        <group> 
+            <group>
+                <field name="account_template"/>
+            </group>
+            </group>
+                
+        </xpath> 
+        </field>
+    </record>
+    <record id="act_report_xml_view" model="ir.ui.view">
+        <field name="model">ir.actions.report.xml</field>
+        <field name="inherit_id" ref="base.act_report_xml_view" />
+        <field name="arch" type="xml">
+            <field name="attachment" position="after">
+                <field name="company_id" invisible="1"/>
+                <field name="pdf_watermark" widget="image" />
+            </field>
+        </field>
+    </record>
+   
+    <template id="assets_pdf" inherit_id="report.assets_pdf">
+        <link position="after">
+            <link href="/multiple_invoice_reports_drc/static/src/css/report_qweb_pdf_watermark.css"
+                  rel="stylesheet"/>
+        </link>
+    </template>
+    </data>
+</odoo>

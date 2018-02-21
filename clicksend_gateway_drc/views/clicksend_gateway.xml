@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+            <record id="sms_notification_inherit_form" model="ir.ui.view">
+                <field name="name">SMS Notification</field>
+                <field name="model">gateway.configuration</field>
+                <field name="inherit_id" ref="sms_notification_drc.gateway_configuration_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//group[@name='conn']" position="after">
+                         <group string="Security and Authentication" attrs="{'invisible':[('sms_gateway','!=','clicksend')]}">
+                            <group>
+                                <field name="clicksend_username"/>
+                                <field name="clicksend_password"/>
+                                <field name="clicksend_api_key"/>
+                            </group>
+                        </group>
+                         <button string="Test connection" name="test_connection" type="object" attrs="{'invisible':[('sms_gateway','!=','clicksend')]}"/>
+                    </xpath>
+                </field>
+            </record>
+        </data>
+    </odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_invoice_form_inherited" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]//group[@class='oe_subtotal_footer oe_right']//field[@name='amount_tax']" position="after">
+                    <field invisible="1" name="is_due_date"/>
+                    <field attrs="{'invisible': [('is_due_date', '!=', True)]}" name="interest" readonly="True"/>
+                    <button attrs="{'invisible': [('is_due_date', '!=', True)]}" name="compute_interest" string="Update Interest" type="object"/>
+                    <button attrs="{'invisible': [('is_due_date', '!=', True)]}" class="oe_highlight" colspan="2" groups="interest_on_overdue_invoice_drc.group_sale_officer" name="reset" string="Reset" type="object"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_account_payment_term_form_inherited_view" model="ir.ui.view">
+            <field name="name">account.payment.term_form_inherit</field>
+            <field name="model">account.payment.term</field>
+            <field name="inherit_id" ref="account.view_payment_term_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]" position="inside">
+                    <field groups="interest_on_overdue_invoice_drc.group_sale_officer" name="interest_rate"></field>
+                    <field groups="interest_on_overdue_invoice_drc.group_sale_officer" name="interest_type"></field>
+                    <field groups="interest_on_overdue_invoice_drc.group_sale_officer" name="account"></field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

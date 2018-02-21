@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+             <record id="delivery_report_tree" model="ir.ui.view">
+                <field name="name">delivery report tree</field>
+                <field name="model">delivery.report</field>
+                <field name="arch" type="xml">
+                    <tree colors = "red:sms_state_delivery == 'undelivered';orange:sms_state_delivery == 'sent';">
+                        <field name="sms_to_delivery" string="To"/>
+                        <field name="sms_message_delivery" string="Message"/>
+                        <field name="sms_gateway_send_sms_delivery" string="Gateway"/>
+                        <field name="sms_state_delivery" string="Status"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="delivery_report_form" model="ir.ui.view">
+                <field name="name">delivery report form</field>
+                <field name="model">delivery.report</field>
+                <field name="arch" type="xml">
+                    <form >
+                        <header>
+                            <button string="Send Now" name="send_sms" type="object"/>
+                            <field name="sms_state_delivery" string="State" widget="statusbar"/>
+                        </header>
+                        <sheet>
+                            <group>
+                                <field name="sms_gateway_send_sms_delivery"/>
+                            </group>
+                            <group>
+                                <field name="sms_to_delivery"/>
+                            </group>
+                            <group>
+                                <field name="sms_auto_delete_delivery"/>
+                            </group>
+                            <notebook>
+                                <page string="SMS">
+                                    <group>
+                                        <field name="sms_message_delivery"/>
+                                        <field name="delivery_id" invisible="1"/>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model = "ir.actions.act_window" id = "action_sms_delivery_report">
+                <field name = "name">Delivery Report</field>
+                <field name = "res_model">delivery.report</field>
+                <field name = "view_type">form</field>
+                <field name = "view_mode">tree,form</field>
+            </record>
+
+            <menuitem id="sms_delivery_report" name="Delivery Report" parent="sales_menu_history" action="action_sms_delivery_report"/>
+        </data>
+    </odoo>

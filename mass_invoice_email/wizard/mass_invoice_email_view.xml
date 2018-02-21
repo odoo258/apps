@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+        <act_window id="action_mass_mail_send"
+            name="Mass Invoices Email Send"
+            res_model="mass_invoice_mail"
+            src_model="account.invoice"
+            view_type="form"
+            view_mode="form"
+            multi="True"
+            target="new"
+            key2="client_action_multi" />
+
+        <record model="ir.ui.view" id="mass_invoice_email_wizard">
+            <field name="name">mass_invoice_mail_wizard</field>
+            <field name="model">mass_invoice_mail</field>
+            <field name="arch" type="xml">
+                <form string="Mass Invoice Mail Send">
+                    <group>
+                        <div>This wizard will send selected invoices to customers
+                        </div>
+                    </group>
+                    <footer>
+                        <button string="Send" name="send_email" type="object" class="oe-highlight"/>
+                        or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding = "utf-8"?>
+<odoo>
+    <data>
+        <record id="cash_module_inherited" model="ir.ui.view">
+            <field name="name">account.bank.statement.form</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="memo"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_custom_sale_config_form_inherited">
+            <field name="name">account.payment.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='communication']" position="after"> 
+                <group>                           
+                    <field name="bank_reg_entry"/>
+                    <field name="bank_reg" attrs="{'invisible':[('bank_reg_entry', '=', False)]}"/>
+                </group>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="wizard_my_module_print">
+            <field name="name">account.payment.invoice.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='communication']" position="after"> 
+                  <group>
+                    <field name="bank_reg_entry"/>
+                    <field name="bank_reg" attrs="{'invisible':[('bank_reg_entry', '=', False)]}"/>
+                  </group>
+                </xpath>
+          </field>
+        </record>
+    </data>
+</odoo>

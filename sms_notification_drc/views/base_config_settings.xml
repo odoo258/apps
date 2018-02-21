@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+            <record id="base_config_settings_inherit" model="ir.ui.view">
+                <field name="name">base config inherit</field>
+                <field name="model">base.config.settings</field>
+                <field name="inherit_id" ref="base_setup.view_general_configuration"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//group" position="after">
+                        <group>
+                            <label for="id" string="SMS"/>
+                            <div>
+                                <div>
+                                    <field name="group_country_call" class="oe_inline"/>
+                                    <label for="group_country_call"/>
+                                    <p class="oe_inline oe_grey fa fa-info-circle">
+                                         If not enabled then it will pick country calling code from the country selected in customer. In case customer has no country then it will pick country calling code from company's country.
+                                    </p>
+                                </div>
+                                <div name="sms.gateway_account">
+                                    <button type="action" name="300" string="Configure SMS Gateway Account" class="oe_link"/>
+                                </div>
+                                <div>
+                                    <field name="module_plivo_gateway_drc" class="oe_inline"/>
+                                    <label for="module_plivo_gateway_drc"/>
+                                </div>
+                                <div>
+                                    <field name="module_clicksend_gateway_drc" class="oe_inline"/>
+                                    <label for="module_clicksend_gateway_drc"/>
+                                </div>
+                            </div>
+                         </group>
+                       
+                    </xpath>
+                </field>
+            </record>
+
+            <menuitem id="menu_sms" name="SMS" sequence="1" parent="base.menu_custom" groups="sms_notification_drc.group_sms"/>
+            
+        </data>
+    </odoo>

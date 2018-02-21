@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id = 'xpath_inherit_mrp_config_settings' model = 'ir.ui.view' >
+            <field name = "name">inherit mrp settings</field>
+            <field name = "model">mrp.config.settings</field>
+            <field name = "inherit_id" ref="mrp.view_mrp_config"></field>
+            <field name ="arch" type = "xml">
+                <xpath expr = "//field[@name='group_mrp_routings']" position="after">
+                    <group string="MRP Potential">
+                        <field name="allow_boolean"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+         <record id = 'xpath_inherit_product_template' model = 'ir.ui.view' >
+            <field name = "name">inherit product template</field>
+            <field name = "model">product.template</field>
+            <field name = "inherit_id" ref="product.product_template_only_form_view"></field>
+            <field name ="arch" type = "xml">
+                <xpath expr = "//group[@name='inventory']/group" position="after">
+                    <group>
+                        <field name="mrp_potential"/>
+                        <field name="bottleneck_component" widget="many2many_tags"/>
+                        <field name="mrp_forecast"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

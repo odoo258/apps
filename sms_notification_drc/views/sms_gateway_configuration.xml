@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+        <record model = "ir.ui.view" id = "gateway_configuration_tree">
+            <field name = "name">gateway configuration tree</field>
+            <field name = "model">gateway.configuration</field>
+            <field name = "arch" type = "xml">
+                <tree>
+                    <field name = "priority"/>
+                    <field name = "description"/>
+                    <field name="sms_gateway"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model = "ir.ui.view" id = "gateway_configuration_form">
+            <field name = "name">gateway configuration form</field>
+            <field name = "model">gateway.configuration</field>
+            <field name = "arch" type = "xml">
+                <form>
+                    <sheet>
+                        <group string="SMS Configuration">
+                            <group>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="priority"/>
+                            </group>
+                        </group>
+                        <group string="Connection Information" name="conn">
+                            <group>
+                                <field name="mobile" placeholder="eg. +919875867948"/>
+                            </group>
+                            <group>
+                                <field name="sms_gateway"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model = "ir.actions.act_window" id = "sms_gateway_configuration">
+            <field name = "name">SMS Gateway Configuration</field>
+            <field name = "res_model">gateway.configuration</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="gateway_configuration" name="Gateway Configuration" parent="menu_sms" action="sms_gateway_configuration"/>
+    </data>
+</odoo>

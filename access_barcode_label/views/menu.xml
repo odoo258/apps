@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="group_access_barcode_label" model="res.groups">
+            <field name="name">Access Barcode Label</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        
+        <act_window name="Dynamic Product Label"
+        res_model="product.access.barcode.label"
+        src_model="product.product"
+        key2="client_print_multi" 
+        view_mode="form" target="new" 
+        view_type="form"
+        id="dynamic_product_label_print" 
+        groups="group_access_barcode_label"/>
+
+    </data>
+</openerp>

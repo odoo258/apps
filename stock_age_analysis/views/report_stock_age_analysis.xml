@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<report
+            id="age_report"
+            string="Stock Age Analysis"
+            model="stock.move"
+            report_type="qweb-pdf"
+            file="stock_age_analysis.report_stock_age_analysis"
+            name="stock_age_analysis.report_stock_age_analysis"
+            menu="False"
+        />
+        <template id="custom_external_layout_header">
+            <div class="header">
+                <div class="row">
+                    <t t-if="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id"></t>
+                    </t>
+                    <t t-if="not o or not 'company_id' in o">
+                        <t t-set="company" t-value="res_company"></t>
+                    </t>
+                    <div class="col-xs-4" style="margin: 15px 1px 5px 25px;">
+                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                    </div>
+                    <div class="col-xs-4" style="margin: 15px 0px 5px 50px; float: right">
+                        <div t-field="company.partner_id" 
+                            t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                            />
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="report_stock_age_analysis">
+            <t t-call="stock_age_analysis.custom_external_layout_header" />
+            <div class="page" >
+                <![CDATA[
+                    <style>
+                        .colxs12 
+                            { margin-top: 10px;
+                              margin-bottom: 10px;
+                            }
+                        .colxs12 div div:nth-child(1)
+                            { 
+                              font-size: 20px; 
+                              font-weight: bold;
+                            }
+                        .colxs12 div div:nth-child(2){ font-size: 16px; }
+                        div.content { margin: 5px 0px 5px 0px;}
+                        div.on_right { text-align: right;}
+                        div.on_left { text-align: left;
+                        }
+                    </style>
+                ]]>
+                <div>
+                    <center>
+                        <b>
+                            <h2>Stock Age Analysis</h2>
+                        </b>
+                    </center>
+                </div>
+                <br/>
+                <div class="raw">
+                    <div class="col-xs-12 colxs12">
+                        <div class="col-xs-4">
+                            <div>
+                                From Date
+                            </div>
+                            <div>
+                                <t t-esc="from_date"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div>
+                                Interval Days
+                            </div>
+                            <div>
+                                <t t-esc="days"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div>
+                                Location
+                            </div>
+                            <div>
+                                <t t-esc="location"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 colxs12">
+                        <t t-if="company">
+                            <div class="col-xs-4">
+                                <div>
+                                    Company
+                                </div>
+                                <div>
+                                    <t t-esc="company"/>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="warehous">
+                            <div class="col-xs-4">
+                                <div>
+                                    Warehous
+                                </div>
+                                <div>
+                                    <t t-esc="warehous"/>
+                                </div>
+                            </div>
+                        </t>
+                        <div class="col-xs-4">
+                            <t t-if="product">
+                                <div>
+                                    Product
+                                </div>
+                                <div>
+                                    <t t-esc="product"/>
+                                </div>
+                            </t>
+                            <t t-if="not product">
+                                <div>
+                                    Product Category
+                                </div>
+                                <div>
+                                    <t t-esc="product_category"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 colxs12">
+                        <div class="col-xs-2 on_left">
+                            <span><b>Products</b></span>
+                        </div>
+                        <t t-foreach="interval" t-as="gap">
+                            <div class="col-xs-2 on_right">
+                                <span><b><t t-esc="gap"/></b></span>
+                            </div>
+                        </t>
+                    </div>
+                    <div>
+                        <t t-foreach="data" t-as="product_dict">
+                            <t t-foreach="product_dict" t-as="pid">
+                                <div class="col-xs-12 content">
+                                    <div class="col-xs-2 on_left" >
+                                        <span><t t-esc="name[pid]"/></span>
+                                    </div>
+                                    <t t-foreach="interval" t-as="gap">
+                                        <t t-foreach="product_dict[pid]" t-as="small_dict">
+                                            <t t-if="gap==small_dict['interval']">
+                                                <div class="col-xs-2 on_right">
+                                                    <span><t t-esc="small_dict['qty']"/></span>
+                                                </div>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </template>
+        
+	</data>
+</openerp>

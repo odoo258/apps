@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<record model="ir.ui.view" id="wizard_form_view">
+            <field name="name">wizard_overdue_form</field>
+            <field name="model">wizard_overdue</field>
+            <field name="arch" type="xml">
+                <form>
+                    <p>this action will search all overdue customers with date selected on wizard less than due date of invoice journal items. And send mail to all customers and print all overdue payments in PDF according to the due date.
+                    </p>
+                    <group>
+                        <field name="date">Date</field>
+                    </group>
+                    <footer>
+                        <button string="Show Customers" name="show_customer" type="object" class="oe_highlight"/>
+                        <button string="Print OverDue Payments" name="print_report" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="overdue_customer_wizard_form_view">
+            <field name="name">mail_overdue_payment_wizard_form</field>
+            <field name="model">mail_overdue_payment_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <h3>Overdue Customers</h3>
+                   <group>
+                        <field name="res"></field>  
+                    </group>  
+                    <footer>
+                        <button string="Send Email" type="object" class="oe_highlight" name="send_email"/>
+                        <button string="Print OverDue Payments" name='print_report' type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="mass_mail_account_overdue_template" model="mail.template">
+            <field name="name">Account overdue</field>
+            <field name="email_from">${ctx.get('sender')|safe}</field>
+            <field name="subject">Overdue Payments</field>
+            <field name="email_to">${ctx.get('overdue_partner').email|safe}</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="lang"></field>
+            <field name="report_template" ref="account.action_report_print_overdue"/>
+            <field name="report_name">Acoount_statement</field>
+            <field name="body_html">
+<![CDATA[
+Dear ${ctx.get('overdue_partner').name | safe},<br><br>Account customer statement is available for you:<br>If you have any question do not hesitate to ask.<br>Thank you for choosing ${ctx.get('overdue_partner').company_id.name | safe}<br><br>
+
+<p style="background-color:#800000;color: white;">
+
+${ctx.get('overdue_partner').company_id.name}</p>
+<p style="background-color:#E9E9E9">${ctx.get('overdue_partner').company_id.street}<br/>${ctx.get('overdue_partner').company_id.city}<br/>${ctx.get('overdue_partner').company_id.state_id.name}<br/>${ctx.get('overdue_partner').company_id.zip}<br/>${ctx.get('overdue_partner').company_id.country_id.name}</p>
+
+]]>
+            </field>
+        </record>
+
+        <act_window id="action_view_menuitem1"
+            name="Overdue Customers"
+            res_model="wizard_overdue"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"></act_window>
+
+
+<menuitem id="menu_sub_account_menuitem1"  name="OverDue Customers" parent="account.menu_finance" sequence="10"/>
+<menuitem id="menu_sub_account_menuitem2" name="Show OverDue Customers" parent="menu_sub_account_menuitem1" sequence="1" action="action_view_menuitem1"/>
+
+
+  </data>
+</odoo>

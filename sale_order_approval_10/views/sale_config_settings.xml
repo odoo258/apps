@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model='ir.ui.view' id='name_id_form'>
+        <field name='name'>sale_config_settings.form</field>
+        <field name='model'>sale.config.settings</field>
+        <field name='inherit_id' ref="sale.view_sales_config"/>
+        <field name='arch' type='xml'>
+            <field name='sale_note' position="before">
+                <field name='so_double_validation' widget="radio"/>
+                <field name='so_double_validation_amount' attrs="{'invisible': [('so_double_validation', '=', 'one_step')]}"/>
+            </field>
+        </field>
+    </record>
+</odoo>

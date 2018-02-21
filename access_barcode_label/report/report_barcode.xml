@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="report_barcode">
+            <t t-call="report.html_container">
+                <div class="page text-center">
+                    <div id="wrapper text-center">
+                        <div class="text-center" t-foreach="data" t-as="product">
+                            <t t-foreach="quantity" t-as="pro">
+                                <t t-if="pro == product">
+                                    <t t-foreach="range(quantity[pro])" t-as="i">
+                                        <![CDATA[<br/>]]>
+                                    <div t-attf-style="width:{{form['width']}}px; height:{{form['height']}}px; border:2px solid black;">
+                                        <div t-foreach="data[product]" t-as="item">
+                                            <t t-if="item not in ['barcode', 'price', 'price_extra', 'lst_price', 'image_variant','image', 'image_small', 'image_medium', 'list_price']">
+                                                <span t-esc="data[product][item]['value']" t-attf-style="font-size:{{data[product][item]['font_size']}}px; color:{{data[product][item]['font_color']}}"/>
+                                            </t>
+                                            <div t-if="item == 'barcode'">
+                                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % (form['barcode_type'],data[product][item]['value'], form['barcode_width'],form['barcode_height'])" t-attf-style="width:{{form['barcode_width']}}px; height:{{form['barcode_height']}}px"/>
+                                            </div>
+                                            <t t-if="item in ['price', 'price_extra', 'lst_price', 'list_price']">
+                                                <span>
+                                                    <t t-if="form['currency_position'] == 'before'">
+                                                        <span t-esc="symbol" t-attf-style="font-size:{{data[product][item]['font_size']}}px; color:{{data[product][item]['font_color']}}"/>
+                                                    </t>
+                                                    <span t-esc="data[product][item]['value']" t-attf-style="font-size:{{data[product][item]['font_size']}}px; color:{{data[product][item]['font_color']}}"/>
+                                                    <t t-if="form['currency_position'] == 'after'">
+                                                        <span t-esc="symbol" t-attf-style="font-size:{{data[product][item]['font_size']}}px; color:{{data[product][item]['font_color']}}"/>
+                                                    </t>
+                                                </span>
+                                            </t>
+                                            <t t-if="item in ['image_variant','image', 'image_small', 'image_medium']">
+                                                <div>
+                                                    <img t-att-src="'data:image/png;base64,%s' % data[product][item]['value']" style="max-height: 100px;"/>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    </t>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</openerp>

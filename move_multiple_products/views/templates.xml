@@ -1,0 +1,100 @@
+<odoo>
+    <data>
+
+        <record id="scrap_product_tree_view" model="ir.ui.view">
+            <field name="name">scrap.products.by.quantity.tree</field>
+            <field name="model">scrap.products.by.quantity</field>
+            <field name="arch" type="xml">
+                <tree string="Scrap Products">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="src_location_id"/>
+                    <field name="dest_location_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="scrap_product_form_view">
+            <field name="name">Product Scrap Form</field>
+            <field name="model">scrap.products.by.quantity</field>
+            <field name="arch" type="xml">
+
+                <form string="Scrap Products Form" attrs="{'edit':[('states','in','draft') ] }">
+                    <header>
+                        <button name="action_confirm" type="object"
+                                string="Confirm move" states="draft"
+                                class="oe_highlight" />
+                        <button name="done" type="workflow"
+                                string="Create stock moves" states="confirmed"
+                                class="oe_highlight" />
+                        <button name="force_move" type="object"
+                                string="Force stock moves" states="confirmed"/>
+                 
+               
+                        <field name="state" widget="statusbar"/>
+                        
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" nolabel="1" readonly="1"/>
+                           
+                      
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="src_location_id" attrs="{'readonly':[('state','in',['confirmed', 'done'])]}"/>
+                                <field name="dest_location_id" attrs="{'readonly':[('state','in',['confirmed', 'done'])]}"/>
+               
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        
+                        <field name="scrap_line" context="{'default_src_loc_id':src_location_id,'default_dest_loc_id':dest_location_id}" attrs="{'readonly':[('state','in',['confirmed', 'done'])]}">
+                            <tree string="Scrap Product Lines" editable='bottom'>
+                                <field name="product_id" />
+                                <field name="quantity"/>
+                                <field name="product_uom"/>
+                                <field name="src_loc_id" widget="selection"/>
+                                <field name="dest_loc_id" widget="selection"/>
+                   
+
+                            </tree>
+                        </field>
+                    </sheet>              
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="scrap_products_form_action">
+            <field name="name">Product stock move</field>
+            <field name="res_model">scrap.products.by.quantity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a Products Scrap.
+                </p>
+            </field>
+        </record>
+
+        <record id="scrap_code_sequence" model="ir.sequence">
+            <field name="name">Sequence For Scrap</field>
+            <field name="code">scrap.products.by.quantity</field>
+            <field name="prefix">SM</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+            <field name="implementation">standard</field>
+           
+        </record>
+       
+
+        <menuitem name="Product Stock Move" 
+                  id="product_stock_move" 
+                  action="scrap_products_form_action" 
+                  parent="stock.menu_stock_inventory_control" 
+                  sequence="2"/>
+    </data>
+</odoo>

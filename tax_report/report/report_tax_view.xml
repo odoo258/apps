@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report 
+        id="action_rpt_tax" 
+        model="tax.report" 
+        string="Tax Report"
+        report_type="qweb-pdf"
+        name="tax_report.report_tax_report"
+        file="tax_report.report_tax_report"
+        menu="False"
+    />
+
+    <record id="paperformat_report_tax" model="report.paperformat">
+        <field name="name">Tax Report</field>
+        <field name="format">A4</field>
+        <field name="margin_top">7.0</field>
+        <field name="margin_bottom">7.0</field>
+        <field name="margin_left">7.0</field>
+        <field name="margin_right">7.0</field>
+        <field name="header_spacing">0</field>
+        <field name="orientation">Portrait</field>
+    </record>
+    <record id="tax_report.action_rpt_tax" model="ir.actions.report.xml">
+        <field name="paperformat_id" ref="paperformat_report_tax" />
+    </record>
+
+    <!-- Another Layout -->
+    <template id="tr_layout">
+       <t t-raw="0"/>
+       <t t-call="tax_report.tr_layout_footer"/>
+    </template>
+
+    <!-- Footer -->
+    <template id="tr_layout_footer">
+        <div class="footer">
+            <div class="col-xs-4 col-xs-offset-8" style="   text-align:right">
+             Page <span class="page"/> of <span class="topage"/>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_tax_report">
+        <t t-call="report.html_container">
+            <t t-call="tax_report.tr_layout">
+                <div class="page">
+                    <div class="col-xs-12" style="text-align: center;">
+                        <h4>Tax Report</h4><br/>
+                        <span t-esc="data['date_from']"/> to <span t-esc="data['date_to']"/>
+                    </div>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr><th class="text-left">Name</th>
+                                <th class="text-left">Base Amount</th>
+                                <th class="text-left">Tax Amount</th>
+                                <th class="text-left">Partner</th>
+                                <th class="text-right">Accounting Date</th>
+                                <th class="text-right">Ref.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><h4><b>Tax Balance</b></h4></td>
+                                <td><span style="font-weight: bold;" t-esc="grand_base_total"/></td>
+                                <td><span style="font-weight: bold;" t-esc="grand_tax_total"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><h4>Taxes Paid</h4></td>
+                                <td><span style="font-weight: bold;" t-esc="grand_base"/></td>
+                                <td><span style="font-weight: bold;" t-esc="grand_tax"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="move_lines" t-as="m">
+                                <t t-if="m['level'] != 0">
+                                    <td>
+                                        <span style="font-weight: normal; color: white;" t-esc="'..' * 1"/>
+                                        <span style="font-weight: normal;" t-esc="m['name']"/>
+                                    </td>
+                                    <td><t t-esc="m['base_amt']"/></td>
+                                    <td><t t-esc="m['tax_amt']"/></td>
+                                    <td><t t-esc="m['partner_name']"/></td>
+                                    <td><t t-esc="m['accounting_date']"/></td>
+                                    <td class="text-right"><t t-esc="m['ref']"/></td>    
+                                </t>
+                                <t t-if="m['level'] == 0">
+                                    <td>
+                                        <span style="font-weight: bold;" t-esc="m['name']"/>
+                                    </td>
+                                    <td><b><t t-esc="m['base_amt']"/></b></td>
+                                    <td><b><t t-esc="m['tax_amt']"/></b></td>
+                                    <td><b><t t-esc="m['partner_name']"/></b></td>
+                                    <td><b><t t-esc="m['accounting_date']"/></b></td>
+                                    <td class="text-right"><b><t t-esc="m['ref']"/></b></td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td><h4>Taxes Received</h4></td>
+                                <td><span style="font-weight: bold;" t-esc="received_grand_base"/></td>
+                                <td><span style="font-weight: bold;" t-esc="received_grand_tax"/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr t-foreach="received_move_lines" t-as="r">
+                                <t t-if="r['level'] != 0">
+                                    <td>
+                                        <span style="font-weight: normal; color: white;" t-esc="'..' * 1"/>
+                                        <span style="font-weight: normal;" t-esc="r['name']"/>
+                                    </td>
+                                    <td><t t-esc="r['base_amt']"/></td>
+                                    <td><t t-esc="r['tax_amt']"/></td>
+                                    <td><t t-esc="r['partner_name']"/></td>
+                                    <td><t t-esc="r['accounting_date']"/></td>
+                                    <td class="text-right"><t t-esc="r['ref']"/></td>
+                                </t>
+                                <t t-if="r['level'] == 0">
+                                    <td>
+                                        <span style="font-weight: bold;" t-esc="r['name']"/>
+                                    </td>
+                                    <td><b><t t-esc="r['base_amt']"/></b></td>
+                                    <td><b><t t-esc="r['tax_amt']"/></b></td>
+                                    <td><b><t t-esc="r['partner_name']"/></b></td>
+                                    <td><b><t t-esc="r['accounting_date']"/></b></td>
+                                    <td class="text-right"><b><t t-esc="r['ref']"/></b></td>
+                                </t>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_team_officer,sale_officertest,model_interest_on_overdue_invoice_drc,group_sale_officer,1,1,1,1

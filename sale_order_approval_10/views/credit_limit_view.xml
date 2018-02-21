@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="credit_limit_view_order_form">
+        <field name="name">credit_limit_view_order_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/header/button[@name='action_confirm']" position="replace">
+                <button name="check_validation" states="sent" string="Confirm Sale" class="btn-primary o_sale_confirm" type="object" />
+            </xpath>
+            <xpath expr="//form/header/button[@name='action_confirm']" position="replace">
+                <button name="check_validation" states="draft" string="Confirm Sale" class="o_sale_confirm" type="object" />
+            </xpath>
+            <xpath expr="//form/header/button[8]" position="after">
+                <button name="second_approval" states="to_approve" type="object" string="Approve credit limit" groups="sales_team.group_sale_manager" class="oe_highlight" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<!--Wizard popup-->
+    <act_window
+    id="act_stock_wizard"
+    name="Import Stock Opening"
+    res_model="stock.inventory.wizard"
+    src_model="stock.inventory"
+    view_mode="form"
+    target = "new"/>
+
+    <record id="import_stock_inventory_view_wizard_form" model="ir.ui.view">
+    <field name="name">Custom_inventory.Wizard</field>
+    <field name="model">stock.inventory.wizard</field>
+    <field name="arch" type="xml">
+    <form string="wizard">
+        <group>
+            <field name = "inventory_name"/>
+            <field name = "location" invisible="1"/>
+        </group>
+        <group>
+            <field name = "Select_xls_csv" widget="radio"/>
+            <field name = "xls_file" filename = 'filename'/>
+            <field name = "filename" invisible = "1"/>
+        </group>
+        <div>
+            <h2> General Instructions</h2>
+            <li>Only <b>.xls</b>, <b>.xlsx</b> or <b>.csv</b> file format is supported.</li>
+            <li>Column heading in <b>Excel file </b>must be like 
+            <b>id and Quantity</b></li>
+            <li>The first row contains the label of the column</li>
+        </div>
+        <field name="is_error" invisible="1"/>
+        <field name="is_validate" invisible="1"/>
+        <group>
+        <field name="message" style="font-size:20px; color:red; font-weight: bold;" attrs="{'invisible': [('is_error', '=', False)]}"/>
+        </group>
+        <footer>
+            <button name="validate_file" string="Validate" attrs="{'invisible': [('is_validate','=',True)]}"  type="object" class="oe_highlight"/>
+            <button name="read_xls_csv" string="Import" type="object" class="oe_highlight" attrs="{'invisible': [('is_validate','=',False)]}"/>
+            <button special="cancel" string="Cancel" class="oe_highlight"/>
+        </footer>
+    </form>
+    </field>
+    </record>
+
+    <menuitem
+        id="import_stock_inventory_menu"
+        action="act_stock_wizard"
+        name="Import Stock Opening" parent="stock.menu_stock_inventory_control" groups="stock.group_stock_manager,purchase.group_purchase_manager" sequence="14"/>
+</odoo>

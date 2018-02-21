@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+             <record id="sms_template_tree" model="ir.ui.view">
+                <field name="name">sms template tree</field>
+                <field name="model">template.sms</field>
+                <field name="arch" type="xml">
+                    <tree>
+                        <field name="template_name"/>
+                        <field name="template_global"/>
+                        <field name="template_model_id"/>
+                        <field name="template_condition"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="sms_template_form" model="ir.ui.view">
+                <field name="name">sms template form</field>
+                <field name="model">template.sms</field>
+                <field name="arch" type="xml">
+                    <form>
+                        <sheet>
+                            <group>
+                                <field name="template_name"/>
+                                <field name="template_global"/>
+                            </group>
+                            <group>
+                                <label style="font-size:20px;" string="SMS Notification will automatically triggered when:" attrs="{'invisible': [('template_global', '=', True)]}"/>
+                            </group>
+                            <group attrs="{'invisible': [('template_global', '=', True)]}">
+                                <field name="template_condition"/>
+                                <field name="template_model_id"/>
+                            </group>
+                            <group>
+                                <field name="template_auto_delete"/>
+                            </group>
+                            <notebook>
+                                <page string="Content">
+                                    <field name="content"/>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model = "ir.actions.act_window" id = "action_sms_template">
+                <field name = "name">SMS Template</field>
+                <field name = "res_model">template.sms</field>
+                <field name = "view_type">form</field>
+                <field name = "view_mode">tree,form</field>
+            </record>
+
+            <menuitem id="sms_template" name="Templates" parent="sales_menu_sms_send" action="action_sms_template" sequence="5"/>
+        </data>
+    </odoo>

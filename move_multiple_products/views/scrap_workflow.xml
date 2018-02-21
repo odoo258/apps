@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wkf_scrap" model="workflow">
+            <field name="name">scrap.product.basic</field>
+            <field name="osv">scrap.products.by.quantity</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!-- Activity -->
+         <record model="workflow.activity" id="draft">
+            <field name="name">Draft</field>
+            <field name="wkf_id" ref="wkf_scrap"/>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>
+
+        <record model="workflow.activity" id="confirmed">
+            <field name="name">Confirmed</field>
+            <field name="wkf_id" ref="wkf_scrap"/>
+             <field name="flow_start" eval="True"/>
+            <field name="kind">function</field>
+            <field name="action">action_confirm()</field>
+        </record>
+
+        <record model="workflow.activity" id="done">
+            <field name="name">Done</field>
+            <field name="wkf_id" ref="wkf_scrap"/>
+            <field name="kind">function</field>
+            <field name="action">action_done()</field>
+        </record>
+
+        <!-- Transitions -->
+        
+        <record model="workflow.transition" id="scrap_draft_to_confirmed">
+            <field name="act_from" ref="draft"/>
+            <field name="act_to" ref="confirmed"/>
+            <field name="signal">confirm</field>
+        </record>
+        
+        <record model="workflow.transition" id="scrap_confirmed_to_done">
+            <field name="act_from" ref="confirmed"/>
+            <field name="act_to" ref="done"/>
+            <field name="signal">done</field>
+        </record>
+    </data>
+</odoo>

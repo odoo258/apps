@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+         <record id="res_company_custom_inherit_form_view" model="ir.ui.view">
+            <field name="name">res_company_inherit.inherit_form_view</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]" position="after">
+                        <page string="Default Report Settings">
+                            <group string="Default Settings">
+                                <group>
+                                    <field name="report_logo" class="oe_avatar" widget="image"/>
+                               
+                                <field name="account_template" widget="selection"/>
+                               
+                                 <field name="template_base_color" widget="color"/>
+                                 
+                                <field name="template_text_color" widget="color"/>
+                                <field name="general_text_color" widget="color"/>
+                                <field name="company_name_color" widget="color"/>
+                                <field name="company_adddress_color" widget="color"/>
+                                <field name="is_comany_name_bold"/>
+                                </group>
+                                <group>
+                                    
+                                <field name="report_watermark_logo" class="oe_avatar" widget="image"/>
+                               
+                                <field name="table_odd_parity_color" widget="color"/>
+                               
+                                 <field name="table_even_parity_color" widget="color"/>
+                                 
+                                <field name="customer_name_color" widget="color"/>
+                                 <field name="customer_address_color" widget="color"/>
+                                  <field name="display_product_description"/>
+                                   <field name="display_customer_name_bold"/>
+                        </group>  
+                               
+                            </group>
+                        </page>
+                    
+                    <page string="Custom Footer">
+                        <group >
+                                <group>
+                                    <field name="is_custom_footer"/>
+                                    <field name="report_footer"/>
+                                    <field name="paperformat_id"/>
+
+                                </group>
+                            </group>
+                        </page>
+                   
+                </xpath>         
+
+                       
+                       
+
+            </field>
+        </record>
+
+       <record model="ir.ui.view" id="view_res_partner_form_inherited">
+        <field name="name">res.partner.property.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//group[1]" position="after">
+        <group> 
+            <group>
+                <field name="account_template"/>
+            </group>
+            </group>
+                
+        </xpath> 
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_invoice_form_inherited">
+        <field name="name">account.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//group[1]" position="after">
+        <group> 
+            <group>
+                <field name="account_template"/>
+            </group>
+            </group>
+                
+        </xpath> 
+        </field>
+    </record>
+
+       <!--  <record model="ir.ui.view" id="book_form_view">
+            <field name="name">account.report.default_settings_form</field>
+            <field name="model">account.report.default_settings</field>
+            <field name="arch" type="xml">
+                <form string="Book Form">
+                    <sheet>
+                       
+                        <group string="Default Report Settings">
+                        <group>
+                                <field name="report_logo" class="oe_avatar" widget="image"/>
+                               
+                                <field name="account_template" widget="selection"/>
+                               
+                                 <field name="template_base_color" widget="color"/>
+                                 
+                                <field name="template_text_color" widget="color"/>
+                                <field name="general_text_color" widget="color"/>
+                                <field name="company_name_color" widget="color"/>
+                                <field name="company_adddress_color" widget="color"/>
+                                <field name="is_comany_name_bold"/>
+
+                        </group>  
+                         <group>
+                                <field name="report_watermark_logo" class="oe_avatar" widget="image"/>
+                               
+                                <field name="table_odd_parity_color" widget="color"/>
+                               
+                                 <field name="table_even_parity_color" widget="color"/>
+                                 
+                                <field name="customer_name_color" widget="color"/>
+                                 <field name="customer_address_color" widget="color"/>
+                                  <field name="display_product_description"/>
+                                   <field name="display_customer_name_bold"/>
+                        </group>  
+                            </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+ -->
+
+       <!--  <record model="ir.actions.act_window" id="account_report_settings_action">
+            <field name="name">Acoount report settings</field>
+            <field name="res_model">account.report.default_settings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Default Report settings
+                </p>
+            </field>
+        </record>
+       <menuitem id="account_report_settings_menu" name="report Settings" parent="account.menu_finance_configuration" sequence="1" action="account_report_settings_action"></menuitem> -->
+    
+    </data>
+</odoo>

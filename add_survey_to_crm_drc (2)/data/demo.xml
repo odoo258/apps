@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Survey Form -->
+        <record model="survey.survey" id="feedback_form">
+            <field name="title">Survey Form</field>
+            <field name="stage_id" ref="survey.stage_in_progress" />
+            <field name="auth_required" eval="False" />
+            <field name="sequence">1</field>
+            <field name="users_can_go_back" eval="True" />
+            <field name="description">&lt;p&gt;This survey should take less than five minutes.&lt;/p&gt;</field>
+            <field name="thank_you_message">&lt;p&gt;&lt;/p&gt;</field>
+        </record>
+        <!-- Page 1 -->
+        <record model="survey.page" id="feedback_1">
+            <field name="title">User Information</field>
+            <field name="survey_id" ref="feedback_form" />
+            <field name="sequence">1</field>
+            <field name="description">&lt;p&gt;&lt;/p&gt;</field>
+        </record>
+        <record model="survey.question" id="feedback_1_1">
+            <field name="page_id" ref="feedback_1" />
+            <field name="sequence">1</field>
+            <field name="question">What is your sweet name?</field>
+            <field name="type">textbox</field>
+        </record>
+        <record model="survey.question" id="feedback_1_2">
+            <field name="page_id" ref="feedback_1" />
+            <field name="sequence">2</field>
+            <field name="question">In which city you live?</field>
+            <field name="type">textbox</field>
+        </record>
+    </data>
+</odoo>

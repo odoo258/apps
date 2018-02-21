@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="configure_birthday_template" model="template.sms">
+            <field name="template_name">Birthday Wishes</field>
+            <field name="template_global">True</field>
+            <field name="content">Many many happy returns of the day.</field>
+        </record>
+        <record id="configure_diwali_template" model="template.sms">
+            <field name="template_name">Diwali Greetings</field>
+            <field name="template_global">True</field>
+            <field name="content">May you have a happy and prosperous new year.</field>
+        </record>
+    </data>
+</odoo>
